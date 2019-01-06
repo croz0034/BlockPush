@@ -1,102 +1,40 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     overflow: hidden;
-}
-
-.dropZone {
-    float: left;
-    min-width: 33%;
-    min-height: 100%;
-    max-height: 100%;
-    border: 1px solid black;
-}
-.page{
-    margin-top: 3%;
-    min-height: 96%;
-    max-height: 96%;
-}
-.displayWindow{
-    height: 14rem;
-    border: 1px solid black;
-    min-width: 100%;
-    
-}
-.zoneTetheredDrag {
-text-align: center;
-    font-weight: bold;
-    border-bottom: 1px solid lightgrey;
     background: white;
-    overflow: visible;
+}
+#Menu, #GameZone, #MapEditor {
+    margin-top: 3rem;
+}
+div {
+    border: solid black 1px
 }
 
-.swipeCard, .draggable {
-    position: absolute;
-    min-width: 33%;
-    margin: 1rem;
-    margin-left: 33%;
-    height: 10rem;
-    text-align: center;
-    border: 5px outset black;
-    border-radius: 1rem;
-
+.Menu{
+    height: 3rem;
+    float: left;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
 }
-
-.draggable {
-    position: fixed;
-    margin: 0;
-}
-.EmptySpace{
-    padding: 137rem;
-}
-.hidden, #hidden{
+.hidden{
     display: none;
 }
-
-         #nav {
-             position: fixed;
-top: 0;
-left: 0;
-right: 0;
-background: white;
-             width: 100%;
-             border-bottom: black 3px outset;
-             height: 4%;
-             display: inline;
-            text-align: center;
-         }
-         #nav > ul {
-            float: left;
-             margin-left: -2.5rem;
-             list-style-type: none
-         }
-         #nav > ul > li {
-             margin: 0;
-             height: 100%;
-             font-size: 1.25rem;
-             padding-right: 1rem;
-             padding-left: 1rem;
-             display: inline;
-             border-right: 1px solid
-         }
-.Current{
-    background-color: lightblue;
-    
+#Banner{
+    position: absolute;
+    height: 3rem;
+    width: 100%;
+    background: darkgray;
+    color: white;
 }
-.ConstructSettings{
-    border: solid 0.5px; width: 10rem; float: left; max-height: 14rem; overflow-y: scroll; overflow-x: hidden;
-}
-.colourBox{
-    border: solid black 1px;
-    display: inline;
-    float: right;
-    margin-right: 2rem;
-    width: 1rem;
-    height: 1rem;
-}
-
-.TextTest{
-    border: solid black;
-    padding: 1rem;
+.BannerName{
+    height: 3rem;
     text-align: center;
+    background: transparent;
+    color: white;
+    font-size: 2rem;
+    padding-top: 0.5rem;
+    font-weight: bold;
 }

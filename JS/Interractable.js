@@ -355,45 +355,110 @@ let Interractable = {
 
     },
     ///////////////// Filters (Add at a later date)
-        listFromObject: {
-          Used: false,
-          List: [],
-          Build: (zone)=>{
-              Interractable.listFromObject.Used = true;
-              
-              console.log(ObjectArrays[zone.id][0])
-              console.log(zone.firstElementChild)
+    listFromObject: {
+        Used: false,
+        List: [],
+        ListItems: [],
+        Build: (zone) => {
+            Interractable.listFromObject.Used = true;
             let targets = zone.firstElementChild;
-            
             let Builder = {}
-            
-            targets.childNodes.forEach((target)=>{
-                if(target.classList){
-                console.log(target.classList[0])
-                Builder[target.classList[0]] = target;
-                   }
-                console.log('pling')
+            targets.childNodes.forEach((target) => {
+                if (target.classList) {
+                    console.log(target.classList[0])
+                    Builder[target.classList[0]] = target;
+                }
             })
-          
-          let ListBuilder = Object.keys(Builder)
-              
-              ObjectArrays[zone.id].forEach((item)=>{
-                  let stage = document.createElement('div');
-                  
-                  let additions;
-                  ListBuilder.forEach((li)=>{
+            let ListBuilder = Object.keys(Builder)
+zone.innerHTML = ""
+            Interractable.listFromObject.FilterConstruct(ListBuilder, zone)
+            ObjectArrays[zone.id].forEach((item) => {
+                let stage = document.createElement('div');
+
+                let additions;
+                ListBuilder.forEach((li) => {
                     additions = Builder[li].cloneNode(true)
                     additions.textContent += item[li];
-                    stage.appendChild(additions)
-                      console.log(item[li])
-                      
-                  })
-                  zone.appendChild(stage)
-                  
-              })
-          }
-            
+                    stage.appendChild(additions);
+                    
+                })
+                zone.appendChild(stage)
+                Interractable.listFromObject.ListItems.push(stage);
+            })
         },
+        FilterConstruct: (prop, zone)=>{
+            let filter = document.createElement('div');
+            zone.appendChild(filter);
+             let By = document.createElement('select');
+            filter.appendChild(By);
+            let additions = document.createElement("option")
+            additions.value = "";
+            additions.textContent = "Filter by";
+            By.appendChild(additions)
+            
+            prop.forEach((option)=>{
+            additions = document.createElement("option")
+            additions.value = option;
+            additions.textContent = option;
+            By.appendChild(additions)
+            })
+            additions = document.createElement('select');
+            additions.innerHTML = 
+            `<option value="includes">contains</option><option value="excludes">excludes</option>
+            <option value="greater"> greater than </option>
+            <option value="less"> less than </option>`;
+            filter.appendChild(additions);
+            additions = document.createElement("input");
+            additions.type = "text";
+            additions.hint = "value";
+            filter.appendChild(additions);
+            
+            
+        filter.addEventListener("change", Interractable.listFromObject.FilterHandler);
+        },
+        
+        FilterHandler: (ev)=>{
+        console.log(ev.target.parentElement.parentElement)
+        let By = ev.target.parentElement.childNodes[0].value
+        let Filter = ev.target.parentElement.childNodes[1].value
+        let UserInput = ev.target.parentElement.childNodes[2].value
+        let items = Interractable.listFromObject.ListItems
+        
+        if(By && Filter && UserInput){
+            let x = 0;
+            let target = ObjectArrays[ev.target.parentElement.parentElement.id]
+        if(Filter == "includes" ){
+            items.forEach((item)=>{
+                console.log(items)
+            console.log(item.textContent);
+            console.log(target[x][By])
+                console.log('ping!')
+            if(target[x][By].includes(UserInput)){
+            item.id = "passed"
+            console.log(item)}
+                
+            else {item.id = 'hidden'}  x ++
+            })
+        }
+                   if(Filter == "excludes" ){
+            items.forEach((item)=>{
+                console.log(items)
+            console.log(item.textContent);
+            console.log(target[x][By])
+                console.log('ping!')
+            if(target[x][By].includes(UserInput)){
+            item.id = "hidden"
+            console.log(item)}
+                
+            else {item.id = 'passed'}  x ++
+            })
+        }
+            
+            
+            
+    }
+        }
+    },
     ///////////////// Initalization aids
     Scour: (Item) => {
         Interractable[Item].List = document.querySelectorAll(`.${Item}`);

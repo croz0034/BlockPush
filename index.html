@@ -4,169 +4,64 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Blank Template</title>
-
-    <link rel="stylesheet" href="CSS/main.css">
-
+    
+   
+    <link rel=stylesheet href="CSS/main.css" />
+<title> Push Block</title>
 </head>
 
 <body>
 
+<div id="Banner"> <Button class="Menu"> &lt Back</Button> <h1 class="BannerName">Menu</h1></div>
 
-    <div class="page" id="Settings">
-        <br>
-
-        <!--
-   <select name="" id="">
-      
-       <optgroup label="Headers">
-       <option value="h1"> Heading 1 </option>
-       <option value="h2"> Heading 2 </option>
-       <option value="h3"> Heading 3 </option>
-       <option value="h4"> Heading 4 </option>
-       <option value="h5"> Heading 5 </option>
-       <option value="h6"> Heading 6 </option>
-       </optgroup>
-       
-       <optgroup label="Lists">
-       <option value="ul">Unordered List</option>
-       <option value="ol">Ordered List</option>
-       <option value="li">List Item </option>
-       </optgroup>
-       
-       <optgroup label="Input items">
-       <option value="button">Button</option>
-       <option value="input">Ordered List</option>
-       <option value="li">List Item </option>
-           
-       </optgroup>
-   </select>
--->
-
-        <div class="ConstructSettings Minbar" id="Colour Picker">
-            <div style="padding: 1rem; text-align: center; background-color: rgb(0,0,0);" id="PaletteBlock">
-            </div>
-            <p id="Red"> Red: <strong class="ColourChoice">0</strong>
-                <input type="range" min="0" max="255" value="0" class="ColourSelector"></p>
-            <p id="Green"> Green: <strong class="ColourChoice">0</strong>
-                <input type="range" min="0" max="255" value="0" class="ColourSelector"></p>
-            <p id="Blue"> Blue: <strong class="ColourChoice">0</strong>
-                <input type="range" min="0" max="255" value="0" class="ColourSelector"></p>
-            <input type="text" placeholder="ColourName" id="ColourName"> <button id="SaveToPallette">Save</button>
-        </div>
-
-        <div class="ConstructSettings Minbar Deletable" id="Colour Palette">
-            <p class="ColourPallette"></p>
-        </div>
-
-        <!--  ////////////////// Text Settings   -->
-        <div class="ConstructSettings" id="Text Settings">
-            Class name: <input class="classname" type="text" style="width: 3.8rem;"> <br>
-            Text Type: <select class="TextType" style="width:4rem; margin-left: 5px">
-                <option value="p">P </option>
-                <option value="h1">H1</option>
-                <option value="h2">H2</option>
-                <option value="h3">H3</option>
-                <option value="h4">H4</option>
-                <option value="h5">H5</option>
-                <option value="h6">H6</option>
-                <option value="li">Li </option>
-            </select>
-            <br>
-            Font Size: <input class="FontSize" style="width: 4rem; margin-left: 9px">
-            Background: <select class="bgColor" style="width:3.5rem;">
-                <option value="rgb(255,255,255)">white</option>
-            </select>
-            <br>
-            Text Colour: <select class="TextColor" style="width:3.5rem;">
-                <option value="rgb(0,0,0)">black</option>
-            </select>
-               Text Align: <select class="TextAlign" style="text-align:  width:4rem; margin-left: 5px">
-                <option value="inherit">inherit</option>
-                <option value="left">left</option>
-                <option value="center">center</option>
-                <option value="right">right</option>
-                <option value="justify">justify</option>
-            </select>
-            <br><br>
-            <div class="TextTest">
-                <p>Test Text</p>
-            </div>
-            <br>
-            
-          
-        </div>
-        
-     
-
-<!--
-        <div class="ConstructSettings Minbar" id="Border Settings">
-            Top: <input type="checkbox" class="BorderActive"><input type="number" style="width: 6rem" class="BorderWidth">
-            Right: <input type="checkbox" class="BorderActive"><input type="number" style="width: 5.5rem" class="BorderWidth">
-            Bottom: <input type="checkbox" class="BorderActive"><input type="number" style="width: 4.6rem" class="BorderWidth">
-            Left: <input type="checkbox" class="BorderActive"><input type="number" style="width: 6rem" class="BorderWidth"><br> All Sides: <input type="checkbox" class="BorderActive"><input type="number" style="width: 4rem" class="BorderWidth">
-            Text Colour: <select class="BorderColor" style="width:3.5rem;">
-                <option value="h2">black</option>
-            </select>
-            Border Style: <br> <select class="BorderStyle" style="width: 100%;">
-                <option value="solid">Solid</option>
-                <option value="inset">inset</option>
-                <option value="outset">outset</option>
-                <option value="dashed">dashed</option>
-                <option value="double">double</option>
-                <option value="groove">groove</option>
-                <option value="ridge">ridge</option>
-                <option value="none">none</option>
-            </select>
-        </div>
--->
-
+<div id="Menu">
+    <div id="Destinations">
+       <p>Play
+        <ol class="GameZone">  </ol>
+        </p>
+        <p class="MapEditor"> Create </p>
     </div>
+    
+</div>
 
-    <!--------------- Coded classes ---------------->
-    <div class="page" id="Interractables">
-        <br>
-        <!--        Drag tethered drop Testing  -->
-        <div class="displayWindow">
-            <div class="dropZone" id="1"></div>
-            <div class="dropZone" id="2">
-                <p class="zoneTetheredDrag" id="Ron"> Test </p>
-                <p class="zoneTetheredDrag" id="Ricky"> 1 </p>
-                <p class="zoneTetheredDrag" id="Rip"> 2 </p>
-            </div>
-            <div class="dropZone" id="3"></div>
-        </div>
+<div id="GameZone">
+<h1 id="MapName"></h1>
+<div class="Map" style="border: solid black 1px; width: 500px; height: 500px; position: relative"></div>
+<div class="DPad">
+<button id="up">Up</button><br>
+<button id="left">left</button>
+<button id="right">right</button> <br>
+<button id="down">down</button>
+</div>
+</div>
 
-        <!--           Swiper Card Testing         -->
-        <div class="displayWindow">
-            <p class="swipeCard"> SwipeCard </p>
-        </div>
-
-        <!--           Draggable Window Testing     -->
-        <div class="displayWindow">
-            <!------------ I found setting the top and left necessary for proper functioning, FromTop and FromLeft are both done in percentages. -->
-            <p class="draggable" FromTop="73" FromLeft="33"> draggable </p>
-        </div>
-
-    </div>
-    <!---------------------------------------------------->
-
-    <div class="page">
-             <div class="listFromObject" id="abilities">
-                <div> <h4 class="name"> name: </h4>
-                <p class="incant">incant: </p>
-                  <p class="effect"> effect: </p></div>
-            </div>
-    </div>
+<div id="MapEditor">
+    
+    <h1> Editor Goes Here.</h1>
+</div>
 
 
 
-    <script src="JS/Abilities.js"></script>
-    <script src="JS/Interractable.js"></script>
-    <script src="JS/codeBuilder.js"></script>
+
+   
+   
+<script src="https://www.gstatic.com/firebasejs/5.7.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC2Q2mS3i2Egz-nWVD_NvqckjX5B8UrQzI",
+    authDomain: "blockpush-41c97.firebaseapp.com",
+    databaseURL: "https://blockpush-41c97.firebaseio.com",
+    projectId: "blockpush-41c97",
+    storageBucket: "blockpush-41c97.appspot.com",
+    messagingSenderId: "321081899277"
+  };
+  firebase.initializeApp(config);
+</script>
+    <script src="JS/FirebaseAdaptor.js"></script>
+    <script src="JS/LevelEditor.js"></script>
+    <script src="JS/Navigation.js"></script>
+    <script src="JS/Code.js"></script>
 </body>
   
 </html>
