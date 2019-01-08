@@ -2,6 +2,11 @@ let Navigator = {
     CurrentPage: "",
     LevelList: "",
     init: async ()=>{
+        ////////////// MapSizing
+        let Width = window.innerWidth;
+        console.log(Width);
+        document.querySelector(".Map").style.width = `${Width}px`;
+        document.querySelector("#GenMap").style.width = `${Width}px`;
     ///////////////// LevelChoices
     CrozFire.init()
     Navigator.LevelList = await CrozFire.RetrieveCollection()
@@ -9,6 +14,8 @@ let Navigator = {
     /////////////// MainMenu:
     document.querySelector(".MapEditor").addEventListener("click", Navigator.navigate);
     
+        
+    ///////////// LevelMenu
     let Play = document.querySelector(".GameZone");
             console.log("Ping");
        Object.keys(Navigator.LevelList).forEach((Level)=>{
@@ -21,9 +28,14 @@ let Navigator = {
        }) 
     console.log(Object.keys(Navigator.LevelList))
         
-    ///////////// LevelMenu
         
+    ////////////// MapEditor
         
+        WorldBuilder.Init()
+    ///////////////// SaveButton
+        
+        document.querySelector(".Save").addEventListener("click", Navigator.saveHandler);
+    /////////////////
         
         
     Navigator.GoTo("Menu")
@@ -53,6 +65,18 @@ let Navigator = {
     let MapNames = Object.keys(MapValues);
     Mapgrid.init(MapValues[MapNames[levelNumber]])
         
+    },
+    saveHandler: (ev)=>{
+        let currentPlace
+        zones.forEach((zone)=>{
+            if(!document.querySelector(`#${zone}`).classList.contains("hidden")){
+                currentPlace = zone;
+            };
+        })
+            console.log(currentPlace)
+        if(currentPlace == "MapEditor"){
+            WorldBuilder.SaveLevel()
+        }
     }
 }
 

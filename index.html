@@ -12,7 +12,7 @@
 
 <body>
 
-<div id="Banner"> <Button class="Menu"> &lt Back</Button> <h1 class="BannerName">Menu</h1></div>
+<div id="Banner"> <Button class="Menu"> &lt Back</Button> <h1 class="BannerName">Menu</h1> <Button class="Save">Save</Button></div>
 
 <div id="Menu">
     <div id="Destinations">
@@ -26,7 +26,7 @@
 
 <div id="GameZone">
 <h1 id="MapName"></h1>
-<div class="Map" style="border: solid black 1px; width: 500px; height: 500px; position: relative"></div>
+<div class="Map" style="border: solid black 1px; width: 500px;position: relative"></div>
 <div class="DPad">
 <button id="up">Up</button><br>
 <button id="left">left</button>
@@ -36,8 +36,11 @@
 </div>
 
 <div id="MapEditor">
+    <p>Width: <input type="number" id="MapWidth"> Height: <input type="number" id="MapHeight"><button id="GridMake"> Generate Grid</button></p>
     
-    <h1> Editor Goes Here.</h1>
+<div id="GenMap" style="border: solid black 1px; width: 500px; position: relative"></div>
+
+<select id="TileTypes"></select>
 </div>
 
 

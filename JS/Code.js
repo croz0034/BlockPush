@@ -112,6 +112,7 @@ let Mapgrid = {
     BuildTerrain: (Level)=>{
         console.log(Mapgrid.MPS)
         let map = Mapgrid.Map;
+        map.style.height = `${parseInt(map.style.width)}px`
         
         console.log(map.style.width)
         for(let y = 0; y < Mapgrid.BuildArray.length; y ++){
@@ -125,9 +126,9 @@ let Mapgrid = {
             newSquare.style.left = `${
 (((parseInt(map.style.width))/(Mapgrid.BuildArray[0].length)) * x)}px`
             newSquare.style.height = `${
-(parseInt(map.style.height))/(Mapgrid.BuildArray.length)}px`
+(parseInt(map.style.width))/(Mapgrid.BuildArray[0].length)}px`
             newSquare.style.top = `${
-(((parseInt(map.style.width))/(Mapgrid.BuildArray.length)) * y)}px`
+(((parseInt(map.style.width))/(Mapgrid.BuildArray[0].length)) * y)}px`
             map.appendChild(newSquare)
             row.push(newSquare)
         }
