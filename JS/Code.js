@@ -3,7 +3,9 @@ let Mapgrid = {
     Map : document.querySelector(".Map"),
     MPS: [],
     TileTypes: 
-    {0: {
+    {
+    ///////// Basic Tiles    
+    0: {
         Type: "Grass",
         Colour: "green",
         Effect: (Direction)=>{return "Complete"}
@@ -12,7 +14,6 @@ let Mapgrid = {
         Type: "Ice",
         Colour: "#A5F2F3",
         Effect: (Direction)=>{
-                    console.log(Direction)
                     MoveBlock[Direction]();
         }
     },
@@ -47,6 +48,8 @@ let Mapgrid = {
      Effect: ()=>{
      alert("Goal!")
     }},
+     
+     ////// Advanced Tiles
     4: {
         Type: "Lock",
         Colour: "Black",
@@ -57,27 +60,8 @@ let Mapgrid = {
             Mapgrid.BuildArray[y][x] = 0;
              MoveBlock.DungeonKey --
          } else { 
-            MoveBlock.LeaveLocation();
-            
-            let x = MoveBlock.Location.x
-            let y = MoveBlock.Location.y
              
-            switch(Direction){
-                case "Up":
-                MoveBlock.Location.y = (y + 1)
-                break;
-                case "Down":
-                MoveBlock.Location.y = (y - 1)
-                break;
-                case "Left":
-                MoveBlock.Location.x = (x + 1)
-                break;
-                case "Right":
-                MoveBlock.Location.x = (x - 1)
-                break;}
-            
-     MoveBlock.PlaceUnit(Mapgrid.MPS[MoveBlock.Location.y][MoveBlock.Location.x]);
-             
+             Mapgrid.TileTypes["2"].Effect(Direction)
          }
     }},
     5: {
@@ -87,15 +71,56 @@ let Mapgrid = {
          MoveBlock.DungeonKey ++
             let x = MoveBlock.Location.x
             let y = MoveBlock.Location.y
-            console.log("Ping")
-            if(String(Mapgrid.BuildArray[y][x]).substr(1)){
+            if(String(Mapgrid.BuildArray[y][x])[1]){
             Mapgrid.BuildArray[y][x] = String(Mapgrid.BuildArray[y][x]).substr(1);   
             MoveBlock.GeneralMove(x,y, Direction)
                 
             } else{
                Mapgrid.BuildArray[y][x] = 0 
             }
-    }}},  
+    }},     
+    6: {
+        Type: "Collectathon",
+        Colour: "Orange",
+     Effect: (Direction)=>{
+            let x = MoveBlock.Location.x
+            let y = MoveBlock.Location.y
+            if(String(Mapgrid.BuildArray[y][x])[1]){
+                console.log(String(Mapgrid.BuildArray[y][x])[1])
+            Mapgrid.BuildArray[y][x] = String(Mapgrid.BuildArray[y][x]).substr(1);
+            MoveBlock.GeneralMove(x,y, Direction)
+                
+            } else{
+               Mapgrid.BuildArray[y][x] = 0 
+            }
+    }},
+    7: {
+        Type: "CollectathonGate",
+        Colour: "blue",
+     Effect: (Direction)=>{
+            let x = MoveBlock.Location.x
+            let y = MoveBlock.Location.y
+         let targets = 0
+        Mapgrid.BuildArray.forEach((row)=>{row.forEach((column)=>{
+             if(String(column).includes("6") && String(column).includes(String(Mapgrid.BuildArray[y][x])[2])){ targets ++}
+         })})
+         
+         if(targets > 0) {
+             Mapgrid.TileTypes["2"].Effect(Direction)
+         } else {
+         
+         
+            if(String(Mapgrid.BuildArray[y][x])[1]){
+            Mapgrid.BuildArray[y][x] = String(Mapgrid.BuildArray[y][x])[1];   
+            MoveBlock.GeneralMove(x,y, Direction)
+                
+            } else{
+               Mapgrid.BuildArray[y][x] = 0 
+            }
+         }
+    }}
+    
+    },  
     init: (BuildArray)=>{
         Mapgrid.BuildArray = [];
             Mapgrid.MPS = [];
@@ -110,7 +135,6 @@ let Mapgrid = {
         
     },
     BuildTerrain: (Level)=>{
-        console.log(Mapgrid.MPS)
         let map = Mapgrid.Map;
         map.style.height = `${parseInt(map.style.width)}px`
         
@@ -137,7 +161,6 @@ let Mapgrid = {
         
         for(let y = 0; y < Mapgrid.BuildArray.length; y ++){
         for(let x = 0; x < Mapgrid.BuildArray[0].length; x ++){
-            console.log()
             Mapgrid.MPS[y][x].style.background = Mapgrid.TileTypes[String(Level[y][x])[0]].Colour
         }}
     }
@@ -156,9 +179,6 @@ let MoveBlock = {
         MoveBlock.PlaceUnit(location),
         MoveBlock.MoveBinder()
         
-        document.querySelector(".Map").addEventListener("touchstart", MoveBlock.SwipeStart)
-        document.querySelector(".Map").addEventListener("mousedown", MoveBlock.SwipeStart)
-        document.querySelector(".Map").addEventListener("click", MoveBlock.SwipeAgain)
     },
     PlaceUnit: (location)=>{
         location.style.background = "red"
@@ -166,14 +186,13 @@ let MoveBlock = {
     LeaveLocation: ()=>{
         let x = MoveBlock.Location.x;
         let y = MoveBlock.Location.y;
-            Mapgrid.MPS[y][x].style.background = Mapgrid.TileTypes[(Mapgrid.BuildArray[y][x])].Colour
+        console.log(String(Mapgrid.BuildArray[y][x])[0])
+            Mapgrid.MPS[y][x].style.background = Mapgrid.TileTypes[String(Mapgrid.BuildArray[y][x])[0]].Colour
     },
     MoveBinder: ()=>{
-     document.getElementById("up").addEventListener("click", MoveBlock.Up);
-        document.getElementById("down").addEventListener("click", MoveBlock.Down);
-        document.getElementById("left").addEventListener("click", MoveBlock.Left);
-        document.getElementById("right").addEventListener("click", MoveBlock.Right);
         window.addEventListener("keypress", MoveBlock.MoveTranslate)
+        document.querySelector(".Map").addEventListener("touchstart", MoveBlock.SwipeStart)
+        document.querySelector(".Map").addEventListener("mousedown", MoveBlock.SwipeStart)
         
     },
     MoveTranslate: (ev)=>{
@@ -252,14 +271,11 @@ let MoveBlock = {
         }
 },
     SwipeFinish: (ev)=>{
+        ev.preventDefault();
         let screenWidth = window.innerWidth;
         let screenHeight = window.innerHeight;
         let distanceWidth = (MoveBlock.SwipeEnd.x - MoveBlock.SwipeOrigin.x)
         let distanceHeight = (MoveBlock.SwipeEnd.y - MoveBlock.SwipeOrigin.y)
-        
-        console.log(MoveBlock.SwipeOrigin)
-        console.log(MoveBlock.SwipeEnd)
-    
         console.log(screenWidth/10)
         if(Math.abs(distanceWidth) > Math.abs(distanceHeight)){
             if (distanceWidth > (screenWidth/10)) {
@@ -278,18 +294,15 @@ let MoveBlock = {
                     MoveBlock.Up()
                 MoveBlock.LastCommand = "Up"
                 }
-            }
+            } else { console.log("ping");
+                    MoveBlock[MoveBlock.LastCommand]()}
     MoveBlock.SwipeOrigin = {x:0, y: 0};
     MoveBlock.SwipeEnd = {x:0, y: 0};
         document.querySelector(".Map").removeEventListener("touchmove", MoveBlock.SwipeMove)
         document.querySelector(".Map").removeEventListener("mousemove", MoveBlock.SwipeMove)
         document.querySelector(".Map").removeEventListener("touchend", MoveBlock.SwipeFinish)
         document.querySelector(".Map").removeEventListener("mouseup", MoveBlock.SwipeFinish)
-},
-    SwipeAgain: (ev)=>{
-        console.log(MoveBlock.LastCommand)
-        MoveBlock[MoveBlock.LastCommand]()
-    }
+}
 }
 
 
