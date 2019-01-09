@@ -148,10 +148,17 @@ let MoveBlock = {
     SwitchesHit: 0,
     SwitchesTotal: 0,
     Location : {x:0, y: 0},
+    SwipeOrigin: {x:0, y: 0},
+    SwipeEnd: {x:0, y: 0},
+    LastCommand: "",
     init : ()=>{
         let location = Mapgrid.MPS[MoveBlock.Location.y][MoveBlock.Location.x];
         MoveBlock.PlaceUnit(location),
         MoveBlock.MoveBinder()
+        
+        document.querySelector(".Map").addEventListener("touchstart", MoveBlock.SwipeStart)
+        document.querySelector(".Map").addEventListener("mousedown", MoveBlock.SwipeStart)
+        document.querySelector(".Map").addEventListener("click", MoveBlock.SwipeAgain)
     },
     PlaceUnit: (location)=>{
         location.style.background = "red"
@@ -220,7 +227,69 @@ let MoveBlock = {
                 MoveBlock.Location = {x: x, y: y};
      MoveBlock.PlaceUnit(Mapgrid.MPS[MoveBlock.Location.y][MoveBlock.Location.x])}
         },
- 
+    SwipeStart: (ev)=>{
+        if (ev.targetTouches){
+            MoveBlock.SwipeOrigin = {x: ev.targetTouches[0].clientX, y: ev.targetTouches[0].clientY};
+            MoveBlock.SwipeEnd = {x: ev.targetTouches[0].clientX, y: ev.targetTouches[0].clientY}
+        }
+            else{
+            MoveBlock.SwipeOrigin = {x: ev.clientX, y: ev.clientY};
+                
+            MoveBlock.SwipeEnd = {x: ev.clientX, y: ev.clientY};
+        }
+        document.querySelector(".Map").addEventListener("touchmove", MoveBlock.SwipeMove)
+        document.querySelector(".Map").addEventListener("mousemove", MoveBlock.SwipeMove)
+        document.querySelector(".Map").addEventListener("touchend", MoveBlock.SwipeFinish)
+        document.querySelector(".Map").addEventListener("mouseup", MoveBlock.SwipeFinish)
+    
+        
+    },
+    SwipeMove: (ev)=>{
+        if (ev.targetTouches && ev.targetTouches[0].clientX > 0 && ev.targetTouches[0].clientY > 0){
+            MoveBlock.SwipeEnd = {x: ev.targetTouches[0].clientX, y: ev.targetTouches[0].clientY}}
+            else if (ev.clientX > 0 && ev.clientY > 0){
+            MoveBlock.SwipeEnd = {x: ev.clientX, y: ev.clientY}
+        }
+},
+    SwipeFinish: (ev)=>{
+        let screenWidth = window.innerWidth;
+        let screenHeight = window.innerHeight;
+        let distanceWidth = (MoveBlock.SwipeEnd.x - MoveBlock.SwipeOrigin.x)
+        let distanceHeight = (MoveBlock.SwipeEnd.y - MoveBlock.SwipeOrigin.y)
+        
+        console.log(MoveBlock.SwipeOrigin)
+        console.log(MoveBlock.SwipeEnd)
+    
+        console.log(screenWidth/10)
+        if(Math.abs(distanceWidth) > Math.abs(distanceHeight)){
+            if (distanceWidth > (screenWidth/10)) {
+                MoveBlock.Right();
+                MoveBlock.LastCommand = "Right"
+                } else if (distanceWidth < (screenWidth/10)) {
+                    MoveBlock.Left()
+                MoveBlock.LastCommand = "Left"
+                }
+            } 
+        else if(Math.abs(distanceWidth) < Math.abs(distanceHeight)){
+            if (distanceHeight > (screenHeight/10)) {
+                MoveBlock.Down();
+                MoveBlock.LastCommand = "Down"
+                } else if (distanceHeight < (screenHeight/10)) {
+                    MoveBlock.Up()
+                MoveBlock.LastCommand = "Up"
+                }
+            }
+    MoveBlock.SwipeOrigin = {x:0, y: 0};
+    MoveBlock.SwipeEnd = {x:0, y: 0};
+        document.querySelector(".Map").removeEventListener("touchmove", MoveBlock.SwipeMove)
+        document.querySelector(".Map").removeEventListener("mousemove", MoveBlock.SwipeMove)
+        document.querySelector(".Map").removeEventListener("touchend", MoveBlock.SwipeFinish)
+        document.querySelector(".Map").removeEventListener("mouseup", MoveBlock.SwipeFinish)
+},
+    SwipeAgain: (ev)=>{
+        console.log(MoveBlock.LastCommand)
+        MoveBlock[MoveBlock.LastCommand]()
+    }
 }
 
 
